@@ -1,0 +1,3 @@
+verilog work "vga_test.v"
+verilog work "ipcore_dir/stone.v"
+verilog work "top.v"

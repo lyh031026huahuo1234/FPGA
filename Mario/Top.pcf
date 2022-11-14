@@ -1,0 +1,23 @@
+//! **************************************************************************
+// Written by: Map P.20131013 on Mon Nov 14 21:27:54 2022
+//! **************************************************************************
+
+SCHEMATIC START;
+COMP "I_rst_n" LOCATE = SITE "AA10" LEVEL 1;
+COMP "I_clk" LOCATE = SITE "AC18" LEVEL 1;
+COMP "O_hs" LOCATE = SITE "M22" LEVEL 1;
+COMP "O_red<0>" LOCATE = SITE "N21" LEVEL 1;
+COMP "O_red<1>" LOCATE = SITE "N22" LEVEL 1;
+COMP "O_red<2>" LOCATE = SITE "R21" LEVEL 1;
+COMP "O_red<3>" LOCATE = SITE "P21" LEVEL 1;
+COMP "O_blue<0>" LOCATE = SITE "T20" LEVEL 1;
+COMP "O_blue<1>" LOCATE = SITE "R20" LEVEL 1;
+COMP "O_blue<2>" LOCATE = SITE "T22" LEVEL 1;
+COMP "O_blue<3>" LOCATE = SITE "T23" LEVEL 1;
+COMP "O_vs" LOCATE = SITE "M21" LEVEL 1;
+COMP "O_green<0>" LOCATE = SITE "R22" LEVEL 1;
+COMP "O_green<1>" LOCATE = SITE "R23" LEVEL 1;
+COMP "O_green<2>" LOCATE = SITE "T24" LEVEL 1;
+COMP "O_green<3>" LOCATE = SITE "T25" LEVEL 1;
+SCHEMATIC END;
+
