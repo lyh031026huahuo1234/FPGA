@@ -1,0 +1,24 @@
+$date
+	Mon Nov 14 20:56:00 2022
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module DisplayNumber_tb $end
+$var wire 8 ! SEGMENT [7:0] $end
+$var wire 4 " AN [3:0] $end
+$var reg 2 # BTN [1:0] $end
+$var reg 8 $ SW [7:0] $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b101 $
+b11 #
+b1111 "
+b1111111 !
+$end
+#20000
