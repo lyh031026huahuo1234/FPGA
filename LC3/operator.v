@@ -1,31 +1,81 @@
 `timescale 1ns / 1ps
 
-module moduleName (
-    input [15:0] operate,
-    input [15:0] IP,
-    output reg all_registers[7:0][15:0]     //the value of the registers
+module moduleName
+#(  parameter  TOTALBIT = 128,
+    parameter  ADDRESS_ABILITY = 16,
+    parameter OPSIZE = 16,
+    parameter REGSIZE = 8,
+    parameter REGBIT = 3
+)
+(
+    input [OPSIZE-1:0] operate,
+    input [ADDRESS_ABILITY-1:0] IP,
+    output reg all_registers[TOTALBIT-1:0]   //the value of the registers
 
 );
 
 
 initial begin
     /* the initial of registers*/
+    all_registers[TOTALBIT:0] = 0; 
 end
 
+reg [ADDRESS_ABILITY-1:0] mem [REGSIZE-1:0];  //use memory to store the value of memory
 
 /* some temp registers fot operate*/
-reg [15:0] temp_reg1;
-reg [15:0] temp_reg2;
-reg [15:0] temp_reg3;
+reg [REGBIT-1:0] temp_reg1;
+reg [REGBIT-1:0] temp_reg2;
+reg [REGBIT-1:0] temp_reg3;
+/* the value for reference operate*/
+reg[ADDRESS_ABILITY-1 : 0] temp_reg1_value;
+reg[ADDRESS_ABILITY-1 : 0] temp_reg2_value;
+reg[ADDRESS_ABILITY-1 : 0] temp_reg3_value;
 
+/* the immediate value that will be used*/
+reg[ADDRESS_ABILITY-1 : 0] immediate_num;
+
+/* used to judge the mode of operation */
+reg flag;
+
+/* Get the encoding of the operation */
 wire [3:0] this_op;
 assign this_op[3:0] = operate[15:12];
 
-always @(*) begin
+
+/*  The entire execution process*/
+always @(*) begin: main_always
+                      
+    integer i; 
+    //copy all_registers to mem
+    for (i=0; i<REGSIZE; i=i+1) begin
+        mem[i] <= all_registers[16*i+15:16*i]
+    end
+
    case(this_op)
    //THis is the start fot ALU operation
     4'b0000: begin
         /* operate for ADD*/
+
+        //get the register will be used for ADD
+        temp_reg1 <= operate[11:9];
+        temp_reg2 <= operate[8:6];
+        temp_reg3 <= operate[2:0];
+
+        //we should know the mode of operate
+        flag <= operate[5];
+
+        if(flag == 1'b0) begin
+            /* R1 = R2 + R3*/
+            temp_reg1_value <= mem[temp_reg2] + mem[temp_reg3];
+            mem[temp_reg1] <= temp_reg1_value;
+        end
+
+        else begin
+            /* R1 = R2 + imm5*/
+            immediate_num <= {11'b0,operate[4:0]};
+            temp_reg1_value <= mem[temp_reg2] + immediate_num;
+            mem[temp_reg1] <= temp_reg1_value;
+        end
     end
     
     4'b0001: begin
