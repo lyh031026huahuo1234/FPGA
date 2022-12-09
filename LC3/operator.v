@@ -101,6 +101,25 @@ always @(*) begin: main_always
     4'b0110: begin
         /*  operate for  MUL   */
         /*  It's a difficult job done by Zhu Guangcheng*/
+
+        // get the first two register used for MUL
+        temp_reg1 <= operate[11:9];
+        temp_reg2 <= operate[8:6];
+
+        // check operate[5] to determine which MUL mode is chosen
+        flag <= operate[5];
+        if(flag == 1'b0) begin
+            /* R1 = R2 * R3 */
+            temp_reg3 <= operate[2:0];
+            MUL mul(.num1(mem[temp_reg2]), .num2(mem[temp_reg3]), .res(temp_reg1_value));
+            mem[temp_reg1] <= temp_reg1_value;
+        end
+        else begin
+            /* R1 = R2 * imm5*/
+            immediate_num <= {11'b0, operate[4:0]};
+            MUL mul(.num1(mem[temp_reg2]), .num2(immediate_num), .res(temp_reg1_value));
+            mem[temp_reg1] <= temp_reg1_value;
+        end
     end
 
     4'b0111: begin
