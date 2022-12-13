@@ -22,7 +22,7 @@ end
 
 reg [ADDRESS_ABILITY-1:0] mem [REGSIZE-1:0];  //use memory to store the value of memory
 
-/* some temp registers fot operate*/
+/* some temp registers for operate*/
 reg [REGBIT-1:0] temp_reg1;
 reg [REGBIT-1:0] temp_reg2;
 reg [REGBIT-1:0] temp_reg3;
@@ -41,6 +41,15 @@ reg flag;
 wire [3:0] this_op;
 assign this_op[3:0] = operate[15:12];
 
+/* copy all_registers to mem*/
+genvar  i;
+generate   
+    for (i=0; i<REGSIZE; i=i+1) begin: copy_mem
+        mem[i] <= all_registers[(16*i)+15:16*i];
+    end
+    
+endgenerate
+
 
 /*  The entire execution process*/
 always @(*) begin: main_always
@@ -48,7 +57,7 @@ always @(*) begin: main_always
     integer i; 
     //copy all_registers to mem
     for (i=0; i<REGSIZE; i=i+1) begin
-        mem[i] <= all_registers[(16*i)+:16];
+        mem[i] <= all_registers[(16*i)+15:16*i];
     end
 
    case(this_op)
