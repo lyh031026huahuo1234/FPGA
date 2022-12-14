@@ -86,6 +86,10 @@ case(control_code[3:0])
 
     end
 
+    4'b1111: begin
+        temp_next_ip[15:0] = 
+    end
+
     default: begin
         temp_next_ip[15:0] = IP[15:0] + 16'b1;
     end

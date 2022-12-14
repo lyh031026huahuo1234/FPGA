@@ -28,14 +28,14 @@ assign in_SR1 = SR1;
 assign in_SR2 = SR2;
 assign in_DR = DR;
 assign in_imm = imm;
-assign IP = pc;
+assign IP = ip;
 
 // fetch instruction
 IF If(
 		.clk(clk),
 		.rst_n(rst_n),
 		.next_ip(next_ip),
-		.ip(pc),
+		.ip(ip),
 		.inst(inst)
 	);
 	
@@ -62,7 +62,8 @@ EXE Exe(
 			.n(n),
 			.z(z),
 			.p(p), 
-			.IP(pc)
+			.IP(ip),
+			.next_IP(next_ip)
 	);
 
 endmodule
