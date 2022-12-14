@@ -64,7 +64,7 @@ always @(*) begin
 			5'b10001: begin
 				// to fill
 				/*call*/
-				Control ctrl1(.IP(IP), .opcode(inst), .n(n), .z(z), .p(p), .next_IP2(DR_value), next_IP(next_IP), .imm(imm));
+				Control ctrl2(.IP(IP), .opcode(inst), .n(n), .z(z), .p(p), .next_IP2(DR_value), next_IP(next_IP), .imm(imm));
 				we = 1;
 
 				end
@@ -73,7 +73,7 @@ always @(*) begin
 				/*ret*/
 				we = 0;
 				//then SR1_value store the IP should be changed to
-				Control ctrl1(.IP(IP), .opcode(inst), .n(n), .z(z), .p(p), next_IP(next_IP), .imm(imm));
+				Control ctrl3(.IP(IP), .opcode(inst), .n(n), .z(z), .p(p), next_IP(next_IP), .imm(imm));
 				end
 	endcase
 end
