@@ -1,0 +1,5 @@
+verilog work "ipcore_dir/inst_mem.v"
+verilog work "IF.v"
+verilog work "ID.v"
+verilog work "EXE.v"
+verilog work "top.v"
