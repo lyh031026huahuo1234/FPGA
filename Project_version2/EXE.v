@@ -31,50 +31,21 @@ RegFile regfile(.clk(clk), .rst_bar(rst_n), .reg1(SR1), .reg2(SR2), .regw(DR), .
 assign IP = next_IP;
 
 always @(*) begin
+	ALU alu(.regA(SR1_value), .regB(SR2_value), .imm(imm),.opcode(inst), .n(n), .z(z), .p(p),.IP(IP),.next_IP(next_IP),.res(DR_value));
+	Control ctrl2(.IP(IP), .opcode(inst), .n(n), .z(z), .p(p), .next_IP2(DR_value), next_IP(next_IP), .imm(imm));
 	case(type)
-			5'b00110: begin
-	
+		5'b00110,
+		5'b00111,
+		5'b00100,
+		5'b00101,
+		5'b10001:
+			begin
+				we = 1;
+			end
+		default:
+			begin
 				we = 0;
-				ALU alu(.regA(SR1_value), .regB(SR2_value), .imm(imm),.opcode(inst), .n(n), .z(z), .p(p),.IP(IP),.next_IP(next_IP),.res(DR_value));
-				we = 1;
-		
-				end
-			5'b00111: begin		// 3'b0 for the default register and 16'h0 for the default register value
-				
-				we = 0;
-				ALU alu(.regA(SR1_value), .regB(16'h0), .opcode(inst), .n(n), .z(z), .p(p),.IP(IP),.next_IP(next_IP), .res(DR_value));
-				we = 1;
-			
-				end
-			5'b00100: begin
-			
-				we = 0;
-				ALU alu(.regA(SR1_value), .regB(16'h0), .opcode(inst), .n(n), .z(z), .p(p),.IP(IP),.next_IP(next_IP), .res(DR_value));
-				we = 1;
-			
-				end
-			5'b00101: begin
-				ALU alu(.regA(16'h0), .regB(16'h0), .opcode(inst), .n(n), .z(z), .p(p), .IP(IP),.next_IP(next_IP),.res(DR_value));
-				we = 1;
-				
-				end
-			5'b01001: begin
-				Control ctrl1(.IP(IP), .opcode(inst), .n(n), .z(z), .p(p),.next_IP(next_IP));
-				end
-			5'b10001: begin
-				// to fill
-				/*call*/
-				Control ctrl2(.IP(IP), .opcode(inst), .n(n), .z(z), .p(p), .next_IP2(DR_value), next_IP(next_IP), .imm(imm));
-				we = 1;
-
-				end
-			5'b00000: begin
-				// to fill
-				/*ret*/
-				we = 0;
-				//then SR1_value store the IP should be changed to
-				Control ctrl3(.IP(IP), .opcode(inst), .n(n), .z(z), .p(p), next_IP(next_IP), .imm(imm));
-				end
+			end
 	endcase
 end
 endmodule

@@ -103,9 +103,9 @@ case(control_code[3:0])
         temp_next_ip[15:0] = imm[15:0];
     end
 
-    default: begin
-        temp_next_ip[15:0] = IP[15:0] + 16'b1;
-    end
+//    default: begin
+//        temp_next_ip[15:0] = IP[15:0] + 16'b1;
+//    end
 
 
 endcase

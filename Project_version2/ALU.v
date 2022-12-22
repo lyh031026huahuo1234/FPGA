@@ -258,11 +258,11 @@ end
     end
 end
 
-default: begin
-    out_res[15:0] = 16'b0;
-
-     next_regA[15:0] = regA[15:0];
-end
+//default: begin
+//    out_res[15:0] = 16'b0;
+//
+//     next_regA[15:0] = regA[15:0];
+//end
 
 endcase
 
