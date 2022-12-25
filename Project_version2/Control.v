@@ -12,7 +12,7 @@ module Control(
 );
 /* the module for control the  flow of program execution*/
 
-assign next_IP2[15:0] = IP[15:0] + 16'b1;
+assign next_IP2[15:0] = next_IP2[15:0];
 
 wire [3:0] control_code;    //get the operation code
 assign control_code[3:0] = opcode[15:12];

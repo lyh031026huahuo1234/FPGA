@@ -13,7 +13,15 @@ module ID(
 reg signed[4:0] extend_5b;
 reg signed[7:0] extend_8b;
 
+
 always @(*) begin
+	type = 0;
+	SR1 = 0;
+	SR2 = 0;
+	DR = 0;
+	imm = 0;
+	extend_5b = 0;
+	extend_8b = 0;
 		case(inst[15:12])
 		4'b0000,		// ADD
 		4'b0010, 	// SUB

@@ -14,7 +14,7 @@ module ALU (
     input p,
     input [15:0] IP,
     output [15:0] next_IP,
-    output signed [15:0] res
+    output reg signed [15:0] out_res
 
 );
 assign next_IP[15:0] = IP[15:0] + 16'b1;
@@ -36,17 +36,24 @@ wire signed [15:0] shr_res;
 wire signed [15:0] shl_res_al;
 wire signed [15:0] shr_res_ar;
 
-reg signed [15:0] out_res;
+wire signed [15:0] add_res_imm;
+wire signed [15:0] sub_res_imm;
+wire signed [15:0] and_res_imm;
+wire signed [15:0] or_res_imm;
+wire signed [15:0] xor_res_imm;
+
+
+//reg signed [15:0] out_res;
 reg next_n;
 reg next_z;
 reg next_p;
 
-reg[15:0] next_regA;
+//reg[15:0] next_regA;
 
 
 
-assign regA[15:0] = next_regA[15:0];
-assign res[15:0] = out_res[15:0];
+//assign regA[15:0] = next_regA[15:0];
+//assign res[15:0] = out_res[15:0];
 assign n = next_n;
 assign z = next_z;
 assign p = next_p;
@@ -135,13 +142,13 @@ case(ALUop[3:0])
         out_res[15:0] = add_res[15:0];
     end
 
-    next_regA[15:0] = regA[15:0];
+    //next_regA[15:0] = regA[15:0];
 end
 
 4'b0001:begin
     /* NOT*/
     out_res[15:0] = not_res[15:0];
-    next_regA[15:0] = not_res[15:0];
+   // next_regA[15:0] = not_res[15:0];
 end
 
 4'b0010:begin
@@ -153,7 +160,7 @@ end
         out_res[15:0] = sub_res[15:0];
     end
    
-    next_regA[15:0] = regA[15:0];
+ //   next_regA[15:0] = regA[15:0];
 end
 
 4'b0011:begin
@@ -164,7 +171,7 @@ end
     else begin
         out_res[15:0] = and_res[15:0];
     end
-    next_regA[15:0] = regA[15:0];
+  //  next_regA[15:0] = regA[15:0];
 end
 
 4'b0100:begin
@@ -175,7 +182,7 @@ end
     else begin
         out_res[15:0] = or_res[15:0];
     end
-    next_regA[15:0] = regA[15:0];
+   // next_regA[15:0] = regA[15:0];
 end
 
 4'b0101:begin
@@ -186,19 +193,19 @@ end
     else begin
         out_res[15:0] = xor_res[15:0];
     end
-    next_regA[15:0] = regA[15:0];
+  //  next_regA[15:0] = regA[15:0];
 end
 
 4'b0110:begin
     /*MUL*/
     out_res[15:0] = mul_res[15:0];
-     next_regA[15:0] = regA[15:0];
+  //   next_regA[15:0] = regA[15:0];
 end
 
 4'b0111:begin
     /*DIV*/
     out_res[15:0] = div_res[15:0];
-     next_regA[15:0] = regA[15:0];
+ //    next_regA[15:0] = regA[15:0];
 end
 
 4'b1000:begin
@@ -210,7 +217,7 @@ end
         out_res[15:0] = shl_res_al[15:0];
     end
 
-     next_regA[15:0] = regA[15:0];
+ //    next_regA[15:0] = regA[15:0];
 end
 
 4'b1001: begin
@@ -222,7 +229,7 @@ end
         out_res[15:0] = shr_res[15:0];
     end
 
-     next_regA[15:0] = regA[15:0];
+  //   next_regA[15:0] = regA[15:0];
 end
 
 4'b1010: begin
@@ -244,17 +251,17 @@ end
         next_z = 0;
     end
 
-     next_regA[15:0] = regA[15:0];
+  //   next_regA[15:0] = regA[15:0];
 end
 
 4'b1011:begin
     /* LD*/
     if(opcode[8] == 1'b1) begin
-        next_regA[15:0] = regB[15:0];
+     //   next_regA[15:0] = regB[15:0];
     end
     else begin
-        next_regA[7:0] = opcode[7:0];
-        next_regA[15:8] = 8'b0;
+     //   next_regA[7:0] = opcode[7:0];
+      //  next_regA[15:8] = 8'b0;
     end
 end
 

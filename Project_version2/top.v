@@ -1,41 +1,55 @@
 `timescale 1ns / 1ps
+`include "IF.v"
+`include "ID.v"
+`include "EXE.v"
+
+
 
 module top(
 		input wire clk,
 		input wire rst_n
     );
 
-reg[15:0] ip;
+//reg[15:0] ip;
+
+wire[15:0] ip;
 wire[15:0] next_ip;
 wire[15:0] inst;
 
-reg[4:0] type;
-reg[2:0] SR1, SR2;
-reg[2:0] DR;
-reg[15:0] imm;
+//reg[4:0] type;
+wire[4:0] type;
+// reg[2:0] SR1, SR2;
+// reg[2:0] DR;
+wire[2:0] SR1, SR2;
+wire[2:0] DR;
+
+//reg[15:0] imm;
+wire [15:0] imm;
 
 wire[4:0] in_type;
 wire[2:0] in_SR1, in_SR2;
 wire[2:0] in_DR;
 wire[15:0] in_imm;
-wire n;
-wire z;
-wire p;
-wire[15:0] IP;
+// wire n;
+// wire z;
+// wire p;
+//wire[15:0] IP;
+
+reg [15:0] IP;
 
 assign in_type = type;
 assign in_SR1 = SR1;
 assign in_SR2 = SR2;
 assign in_DR = DR;
 assign in_imm = imm;
-assign IP = ip;
+//assign IP = ip;
 
 // fetch instruction
 IF If(
 		.clk(clk),
 		.rst_n(rst_n),
-		.next_ip(next_ip),
-		.ip(ip),
+		.IP(ip),
+		.Next_IP(next_ip),
 		.inst(inst)
 	);
 	
@@ -59,9 +73,9 @@ EXE Exe(
 			.SR2(in_SR2),
 			.DR(in_DR),
 			.imm(in_imm),
-			.n(n),
-			.z(z),
-			.p(p), 
+			//.n(n),
+			//.z(z),
+			//.p(p), 
 			.IP(ip),
 			.next_IP(next_ip)
 	);
