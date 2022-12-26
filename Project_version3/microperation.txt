@@ -1,0 +1,42 @@
+数字逻辑设计课程设置微指令
+寄存器分类: R0~R7:通用寄存器 可以存储一个16-bit的二进制数据
+
+n,z,p:状态寄存器
+
+IP:指令寄存器
+
+ISA:(共16组指令)
+
+算数操作：
+ADD: 机器码:0000 Mode1:0000 R1 R2 000 R3 (R1 = R2+R3)
+
+Mode2:0000 R1 R2 1 xxxxx (R1 = R2+im5)
+
+NOT:0001 0001 R1 xxxxxxxxx (R1 = ~R1)
+
+SUB:0010 Mode1:0010 R1 R2 000 R3 Mode2:0010 R1 R2 1 xxxxx
+
+AND:0011
+
+Mode1:0011 R1 R2 000
+Mode2:0011 R1 R2 1 xxxxx (对操作的五bit数进行零拓展)
+OR: 0100 与AND指令类似
+
+XOR:0101 与AND指令类似
+
+MUL:0110 0110 R1 R2 000 R3 (R1=R2*R3) 0110 R1 R2 1 xxxxx
+
+/* 以下指令与原设计有一些改变*/
+SHL:0111(左移) 1000 R1 xxxxxxxxx (逻辑左移1位)
+
+SHR:1000(右移) 与SHL类似
+
+传输操作:
+ST:1001 1001 R1 R2 1 xxxxx (Mem[R2+imm5] <= R1)
+LD:1010 1010 R1 R2 1 xxxxx (R1 <= Mem[R2+imm5]) 1011 R1 0 xxxxxxxx (对零拓展的八位数进行传递)
+流程控制操作:
+BRz:1011 1011 0000000 xxxxx  如果此时z为1，则跳转到PC+imm5处
+BRn:1100 1100 0000000 xxxxx  如果此时n为1，则跳转到PC+imm5处
+BRp:1101 1101 0000000 xxxxx  如果此时p为1，则跳转到PC+imm5处
+JMP:1110 1110 0000000 xxxxx  无条件跳转到PC+imm5处
+HALT:1111 1111 1111 1111 终止程序
