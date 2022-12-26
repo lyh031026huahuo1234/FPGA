@@ -32,8 +32,8 @@ SHL:0111(左移) 1000 R1 xxxxxxxxx (逻辑左移1位)
 SHR:1000(右移) 与SHL类似
 
 传输操作:
-ST:1001 1001 R1 R2 1 xxxxx (Mem[R2+imm5] <= R1)
-LD:1010 1010 R1 R2 1 xxxxx (R1 <= Mem[R2+imm5]) 1011 R1 0 xxxxxxxx (对零拓展的八位数进行传递)
+STR:1001 1001 R1 R2 1 xxxxx (Mem[R2+imm5] <= R1)
+LDR:1010 1010 R1 R2 1 xxxxx (R1 <= Mem[R2+imm5]) 1011 R1 0 xxxxxxxx (对零拓展的八位数进行传递)
 流程控制操作:
 BRz:1011 1011 0000000 xxxxx  如果此时z为1，则跳转到PC+imm5处
 BRn:1100 1100 0000000 xxxxx  如果此时n为1，则跳转到PC+imm5处

@@ -19,22 +19,22 @@ module ALU(
 	// In order to improve the efficiency of multiplication 
 	// and enable it to be implemented within one clock cycle,
 	// pipelined multiplier is adopted
-	assign temp0 = regB[0] ? {16'b0, regA} : 32'b0;
-	assign temp1 = regB[1] ? {15'b0, regA, 1'b0} : 32'b0;
-	assign temp2 = regB[2] ? {14'b0, regA, 2'b0} : 32'b0;
-	assign temp3 = regB[3] ? {13'b0, regA, 3'b0} : 32'b0;
-	assign temp4 = regB[4] ? {12'b0, regA, 4'b0} : 32'b0;
-	assign temp5 = regB[5] ? {11'b0, regA, 5'b0} : 32'b0;
-	assign temp6 = regB[6] ? {10'b0, regA, 6'b0} : 32'b0;
-	assign temp7 = regB[7] ? {9'b0, regA, 7'b0} : 32'b0;
-	assign temp8 = regB[8] ? {8'b0, regA, 8'b0} : 32'b0;
-	assign temp9 = regB[9] ? {7'b0, regA, 9'b0} : 32'b0;
-	assign temp10 = regB[10] ? {6'b0, regA, 10'b0} : 32'b0;
-	assign temp11 = regB[11] ? {5'b0, regA, 11'b0} : 32'b0;
-	assign temp12 = regB[12] ? {4'b0, regA, 12'b0} : 32'b0;
-	assign temp13 = regB[13] ? {3'b0, regA, 13'b0} : 32'b0;
-	assign temp14 = regB[14] ? {2'b0, regA, 14'b0} : 32'b0;
-	assign temp15 = regB[15] ? {1'b0, regA, 15'b0} : 32'b0;
+	assign temp0 = B[0] ? {16'b0, A} : 32'b0;
+	assign temp1 = B[1] ? {15'b0, A, 1'b0} : 32'b0;
+	assign temp2 = B[2] ? {14'b0, A, 2'b0} : 32'b0;
+	assign temp3 = B[3] ? {13'b0, A, 3'b0} : 32'b0;
+	assign temp4 = B[4] ? {12'b0, A, 4'b0} : 32'b0;
+	assign temp5 = B[5] ? {11'b0, A, 5'b0} : 32'b0;
+	assign temp6 = B[6] ? {10'b0, A, 6'b0} : 32'b0;
+	assign temp7 = B[7] ? {9'b0, A, 7'b0} : 32'b0;
+	assign temp8 = B[8] ? {8'b0, A, 8'b0} : 32'b0;
+	assign temp9 = B[9] ? {7'b0, A, 9'b0} : 32'b0;
+	assign temp10 = B[10] ? {6'b0, A, 10'b0} : 32'b0;
+	assign temp11 = B[11] ? {5'b0, A, 11'b0} : 32'b0;
+	assign temp12 = B[12] ? {4'b0, A, 12'b0} : 32'b0;
+	assign temp13 = B[13] ? {3'b0, A, 13'b0} : 32'b0;
+	assign temp14 = B[14] ? {2'b0, A, 14'b0} : 32'b0;
+	assign temp15 = B[15] ? {1'b0, A, 15'b0} : 32'b0;
 
 	// store each bit's mul_res of num1 and num2 in 16 registers
 	assign add0 = temp0 + temp1;
@@ -60,6 +60,7 @@ module ALU(
     // 进行ALU计算
     always @(*) begin
     // 进行运算
+    if(ALUOp <4'b1001) begin
         case (ALUOp)
             4'b0000 : res = A + B;          // ADD
             4'b0001 : res = ~A;             // NOT
@@ -73,20 +74,27 @@ module ALU(
             default : res = 0;
         endcase
         // 设置nzp
-        if(res[15] == 1'b1) begin
+        if(res[15] == 1'b1 && ALUOp[3:0]!=4'b1111) begin
             n = 1;
             z = 0;
             p = 0;
         end
-        else if(res[15:0] == 16'b0) begin
+        else if(res[15:0] == 16'b0 && ALUOp[3:0]!=4'b1111) begin
             z = 1;
             n = 0;
             p = 0;
         end 
-        else begin
+        else if(ALUOp[3:0]!=4'b1111) begin
             p = 1;
             n = 0;
             z = 0;
+        end
+    end 
+        else if(ALUOp[3:0]== 4'b1111) begin
+            p = p;
+            n = n;
+            z = z;
+            res[15:0] = res[15:0];
         end
     end
 

@@ -249,7 +249,7 @@ always @(*) begin
         MemRW = 0;
         ExtSel = 1;
         PCSel = 0;
-        ALUOp = 4'b0000;
+        ALUOp = 4'b1111;
     end
     // BRz
     4'b1011: begin
@@ -265,7 +265,7 @@ always @(*) begin
         InstMemRW = 1;
         MemRW = 0;
         ExtSel = 1;
-        ALUOp = 0010;
+        ALUOp = 4'b1111;
     end
     // BRn
     4'b1100: begin
@@ -281,7 +281,7 @@ always @(*) begin
         InstMemRW = 1;
         MemRW = 0;
         ExtSel = 1;
-        ALUOp = 0010;
+        ALUOp = 4'b1111;
     end
     // BRp
     4'b1101: begin
@@ -297,7 +297,7 @@ always @(*) begin
         InstMemRW = 1;
         MemRW = 0;
         ExtSel = 1;
-        ALUOp = 0010;
+        ALUOp = 4'b1111;
     end
     // JMP
     4'b1110: begin
@@ -309,7 +309,7 @@ always @(*) begin
         InstMemRW = 1;
         MemRW = 0;
         ExtSel = 1;
-        ALUOp = 0010;
+        ALUOp = 4'b0010;
     end
     // HALT
     4'b1111: begin
@@ -320,7 +320,7 @@ always @(*) begin
         InstMemRW = 0;
         MemRW = 0;
         ExtSel = 0;
-        ALUOp = 0000;
+        ALUOp = 4'b1111;
     end
     endcase
 end

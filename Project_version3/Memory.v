@@ -9,12 +9,16 @@ module Memory(
     // 模拟内存，以8位为一字节存储，共64字节
     reg [7:0] memory[0:63];
 
-    integer i;
-    initial begin
-        for (i = 0; i < 64; i = i + 1) begin
-            memory[i] <= 0;
-        end
+     initial begin
+        $readmemb("test/Mem.txt", memory);    //读取测试文档中的指令
     end
+
+    // integer i;
+    // initial begin
+    //     for (i = 0; i < 64; i = i + 1) begin
+    //         memory[i] <= 0;
+    //     end
+    // end
 
     always @(Addr or DataIn) begin
         // 写内存

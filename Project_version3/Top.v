@@ -1,5 +1,15 @@
 `timescale 1ns / 1ps
-module Top(
+`include "ControlUnit.v"
+`include "PC.v"
+`include "InstMem.v"
+`include "RegFile.v"
+`include "ALU.v"
+`include "Memory.v"
+`include "MUX.v"
+`include "Imm5Extend.v"
+
+
+module top(
     input clk,
     input reset,
     output [15:0] inst,
@@ -38,7 +48,9 @@ module Top(
         output reg [3:0] ALUOp      // ALU操作控制
     );
     */
-    ControlUnit cu(inst, n, z, p, PCSel, change, ALUSrc2Sel, WriteDateSel, RegWE, InstMemRW, MemRW, ExtSel, ALUOp);
+    //ControlUnit cu(inst, n, z, p, PCSel, change, ALUSrc2Sel, WriteDateSel, RegWE, InstMemRW, MemRW, ExtSel, ALUOp);
+    ControlUnit cu(.inst(inst), .n(n), .z(z), .p(p), .PCSel(PCSel), .change(change), .ALUSrc2Sel(ALUSrc2Sel), .WriteDateSel(WriteDateSel), 
+    .RegWE(RegWE), .InstMemRW(InstMemRW), .MemRW(MemRW), .ExtSel(ExtSel), .ALUOp(ALUOp));
 
     /*
     module PC(

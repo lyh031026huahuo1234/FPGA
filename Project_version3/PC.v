@@ -6,7 +6,8 @@ module PC(
     input [15:0] nextPC,               // 下一个PC
     output reg[15:0] currentPC         // 当前PC
     );
-
+//currentPC代表了将要取得的指令的地址
+//将这个地址首先初始化为0
 initial begin
     currentPC <= 0;
 end
